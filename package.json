@@ -1,0 +1,16 @@
+{
+  "name": "user_management",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "turbo run dev",
+    "backend": "npm run dev --workspace=apps/backend",
+    "frontend": "npm run dev --workspace=apps/frontend"
+  },
+  "devDependencies": {
+    "turbo": "latest"
+  }
+}

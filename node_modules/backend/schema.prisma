@@ -1,0 +1,70 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id            String         @id @default(cuid())
+  email         String         @unique
+  name          String
+  password      String
+  role          Role          @default(EMPLOYEE)
+  department    String
+  joinDate      DateTime      @default(now())
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  leaves        Leave[]
+  attendances   Attendance[]
+}
+
+model Leave {
+  id          String       @id @default(cuid())
+  userId      String
+  user        User         @relation(fields: [userId], references: [id])
+  startDate   DateTime
+  endDate     DateTime
+  reason      String
+  status      LeaveStatus  @default(PENDING)
+  type        LeaveType
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
+model Attendance {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  date        DateTime  @default(now())
+  checkIn     DateTime?
+  checkOut    DateTime?
+  status      AttendanceStatus @default(PRESENT)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+enum Role {
+  ADMIN
+  EMPLOYEE
+}
+
+enum LeaveStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum LeaveType {
+  SICK
+  CASUAL
+  VACATION
+}
+
+enum AttendanceStatus {
+  PRESENT
+  ABSENT
+  HALF_DAY
+}
