@@ -20,10 +20,13 @@ For BE
 npm init -y
 npm install express cors dotenv mongoose bcryptjs jsonwebtoken
 Your structure should look like this:
-/
+
+```
 ├── apps/
 │ ├── frontend/ (Next.js app)
 │ └── backend/ (Express.js app)
 ├── packages/ (for shared code)
 ├── package.json
 └── turbo.json
+
+```

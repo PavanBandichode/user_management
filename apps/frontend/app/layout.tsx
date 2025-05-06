@@ -1,4 +1,7 @@
-import type { Metadata } from "next";
+"use client";
+
+import { useEffect } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -12,16 +15,30 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Employee Management System",
-  description: "Manage employee leaves and attendance",
-};
+// export const metadata = {
+//   title: "Employee Management System",
+//   description: "Manage employee leaves and attendance",
+// };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
+  const router = useRouter();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const isAuthPage = pathname.includes("/auth/");
+
+    if (!token && !isAuthPage) {
+      router.push("/auth/login");
+    } else if (token && isAuthPage) {
+      router.push("/dashboard");
+    }
+  }, [pathname, router]);
+
   return (
     <html lang="en">
       <body
