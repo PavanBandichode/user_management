@@ -15,10 +15,18 @@ mkdir backend
 create apps and packanges folders
 
 For FE
+
+```
 npx create-next-app . --typescript --tailwind --eslint
+```
+
 For BE
+
+```
 npm init -y
 npm install express cors dotenv mongoose bcryptjs jsonwebtoken
+```
+
 Your structure should look like this:
 
 ```
